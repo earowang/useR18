@@ -5,15 +5,20 @@
     <meta charset="utf-8">
     <meta name="author" content="Earo Wang" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+    <script src="index_files/d3/d3.min.js"></script>
+    <link href="index_files/collapsibleTree/collapsibleTree.css" rel="stylesheet" />
+    <script src="index_files/collapsibleTree-binding/collapsibleTree.js"></script>
     <link href="index_files/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="remark.css" type="text/css" />
+    <link rel="stylesheet" href="extra.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
 # Tidy data structures to support exploration <br> and modeling of temporal-context data
-## <img src='img/tsibble.svg' height=125px>
+## <img src='img/tsibble.png' height=125px>
 ### Earo Wang
 ### 13 July, 2018 <br> slides at <a href="http://slides.earo.me/useR18" class="uri">http://slides.earo.me/useR18</a>
 
@@ -24,55 +29,445 @@ class: center, middle, inverse, title-slide
 
 
 
-## Tidy data
+## Time series standards in R ecosystem.red[&lt;sup&gt;1&lt;/sup&gt;]
 
-* Re-imagining data frame: `tibble`
-* Spatial data: `sp`
-* Text data: `tidytext`
-* Google drive: `googledrive::dribble`
+* **ts** represents regularly spaced time series using numeric time stamps.
+  + `ts(data, start = 1, frequency = 1)`
+
+
+* **zoo** provides infrastructure for regularly and irregularly spaced time series using arbitrary classes for the time stamps.
+  + `zoo(x, order.by = index(x))`
+
+
+* **xts** extends the `zoo` class but provides an mechanism to customize the object's meta-data.
+  + `xts(x, order.by = index(x))`
+
+
+* **irts**, **fts**, **timeSeries**, **tis**, and etc.
+
+.footnote[
+.red[1.] [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
+]
 
 ---
 
 ## Time series standards in R ecosystem
 
-* **ts**
-* **zoo**
-* **xts**
+The data structure that underlies these time series objects:
+
+`\begin{equation}
+  \begin{bmatrix}
+  X_{11} &amp; X_{21} &amp; \cdots &amp; X_{p1} \\
+  X_{12} &amp; X_{22} &amp; \cdots &amp; X_{p2} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  X_{1T} &amp; X_{2T} &amp; \cdots &amp; X_{pT}
+  \end{bmatrix}
+\end{equation}`
+
+where `\(X_{jt}\)` represents series `\(j\)`, for `\(j = 1, \dots, p\)` and `\(1 \leq t \leq T\)`, in the form of a `\(T \times p\)` matrix.
+
+--
+
+This matrix structure assumes
+
+* homogeneity
+* time indices implicitly inferred as attributes/meta-information
+* explicit missing values
+
+It is **model-centric** rather than **data-centric**.
+
+???
 
 Too many defaults as if we live in an ideal data world
 
 ---
 
-## But the reality is ...
+class: inverse middle center
 
-* Heterogeneous data types
-* Implicit missing values
-* Multiple measured variables
-* Low time resolution
+## Do we have too many restrictions about data?
 
 ---
 
-## The ultimate 15th time series class
+background-image: url(img/tree-bg.png)
+background-size: 100%
 
-&lt;img src='img/tsibble.svg' height=165px&gt;
+class: center
+
+## Brisbane City Councils Contact Centre enquiries.red[&lt;sup&gt;2&lt;/sup&gt;]
+
+.footnote[
+.red[2.] data source: [Brisbane City Councils](https://www.data.brisbane.qld.gov.au/data/dataset/contact-centre-customer-enquiries)
+]
 
 ---
 
 
+## Brisbane City Councils Contact Centre enquiries
+
+
+
+
+```r
+enquiry
+```
+
+```
+#&gt; # A tibble: 111,653 x 5
+#&gt;   date       channel category                service volume
+#&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
+#&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
+#&gt; 2 2014-06-17 Email   Built Structure Control Advert…      1
+#&gt; 3 2014-07-14 Email   Built Structure Control Advert…      1
+#&gt; 4 2014-07-21 Email   Built Structure Control Advert…      1
+#&gt; 5 2014-07-22 Email   Built Structure Control Advert…      1
+#&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
+#&gt; # ... with 1.116e+05 more rows
+```
+
+--
+
+* heterogeneous data types
+* implicit missing values
+* nesting &amp; crossing factors
+
+---
+
+## Brisbane City Councils Contact Centre enquiries
+
+<div id="htmlwidget-f8295a30f7c02b1aaed7" style="width:864px;height:600px;" class="collapsibleTree html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f8295a30f7c02b1aaed7">{"x":{"data":{"name":"Brisbane City Councils","fill":"#1b9e77","children":[{"name":"Animal Control","fill":"#d95f02","children":[{"name":"Animal Permit","fill":"#7570b3"},{"name":"Animal Reunion","fill":"#7570b3"},{"name":"Commercial Animal Control","fill":"#7570b3"},{"name":"Domestic Animal Control","fill":"#7570b3"},{"name":"Livestock Control","fill":"#7570b3"},{"name":"Lost Animal Reunion","fill":"#7570b3"}]},{"name":"Built Structure Control","fill":"#d95f02","children":[{"name":"Advertising Sign Enforcement","fill":"#7570b3"},{"name":"Advertising Sign Local Law","fill":"#7570b3"},{"name":"Advertising Sign Permit","fill":"#7570b3"},{"name":"Advertising Sign Regulation","fill":"#7570b3"},{"name":"Building Plan Search","fill":"#7570b3"},{"name":"Built Structure Enforcement","fill":"#7570b3"},{"name":"Built Structure Legislation Consultation","fill":"#7570b3"},{"name":"Built Structure Permit","fill":"#7570b3"},{"name":"Built Structure Regulation","fill":"#7570b3"}]},{"name":"Call Centre Services","fill":"#d95f02","children":[{"name":"Customer Management","fill":"#7570b3"},{"name":"Customer Request Management","fill":"#7570b3"},{"name":"Lost Property Management","fill":"#7570b3"},{"name":"Switchboard Services","fill":"#7570b3"}]},{"name":"Parking Control","fill":"#d95f02","children":[{"name":"Commercial Parking Permit","fill":"#7570b3"},{"name":"On Street Parking Management","fill":"#7570b3"},{"name":"Parking Control Enforcement","fill":"#7570b3"},{"name":"Parking Control Local Law","fill":"#7570b3"},{"name":"Residential Parking Permit","fill":"#7570b3"}]},{"name":"Plumbing Control Services","fill":"#d95f02","children":[{"name":"Plumbing Control","fill":"#7570b3"},{"name":"Plumbing Enforcement","fill":"#7570b3"},{"name":"Plumbing Permit","fill":"#7570b3"},{"name":"Plumbing Regulation","fill":"#7570b3"}]},{"name":"Property Information Services","fill":"#d95f02","children":[{"name":"Development History","fill":"#7570b3"},{"name":"Flood Information and Advice","fill":"#7570b3"},{"name":"Property Searches","fill":"#7570b3"},{"name":"Rates Services","fill":"#7570b3"},{"name":"Spatial Information Services","fill":"#7570b3"}]},{"name":"Rates Assessment","fill":"#d95f02","children":[{"name":"Rates Entitlements","fill":"#7570b3"},{"name":"Rates Maintenance","fill":"#7570b3"}]},{"name":"Rates Payment Services","fill":"#d95f02","children":[{"name":"Rates Payment Collection","fill":"#7570b3"}]},{"name":"Road Network Management","fill":"#d95f02","children":[{"name":"Bridge","fill":"#7570b3"},{"name":"Footpath","fill":"#7570b3"},{"name":"Kerb and Channel","fill":"#7570b3"},{"name":"Road","fill":"#7570b3"},{"name":"Road Network Initiative","fill":"#7570b3"},{"name":"Road Network Safety Device","fill":"#7570b3"},{"name":"Sign and Line","fill":"#7570b3"},{"name":"Signal","fill":"#7570b3"},{"name":"Streetlight","fill":"#7570b3"}]},{"name":"Tree Management","fill":"#d95f02","children":[{"name":"Tree Maintenance","fill":"#7570b3"},{"name":"Tree Management Control","fill":"#7570b3"},{"name":"Tree Management Programs","fill":"#7570b3"}]},{"name":"Waste Collection","fill":"#d95f02","children":[{"name":"Kerbside Collection","fill":"#7570b3"},{"name":"Public Space Waste Collection","fill":"#7570b3"},{"name":"Waste Asset Provision","fill":"#7570b3"},{"name":"Waste Collection Service Management","fill":"#7570b3"},{"name":"Waste Community Consultation","fill":"#7570b3"}]},{"name":"Other","fill":"#d95f02","children":[{"name":"Call Centre Services","fill":"#7570b3"},{"name":"Other","fill":"#7570b3"}]}]},"options":{"hierarchy":["category","service"],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":16,"tooltip":false,"collapsed":true,"zoomable":true,"margin":{"top":20,"bottom":20,"left":201,"right":345}}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+class: middle center
+
+![](https://imgs.xkcd.com/comics/standards.png)
+
+.footnote[
+.red[reference:] [XKCD on "standards"](https://xkcd.com/927/)
+]
 
 ---
 
 class: inverse middle center
 
+.scale-up[&lt;img src="img/tsibble.png" height=220px&gt;]
+
+## The 15th time series standard
+### .orange[time series + tibble = tsibble]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+]
+.right-column[
+## Coercion
+
+
+```r
+library(tsibble)
+enquiry_tsbl &lt;- enquiry %&gt;% 
+  as_tsibble(
+    key = id(service | category, channel), index = date
+  )
+enquiry_tsbl
+```
+
+```
+#&gt; # A tsibble: 111,653 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [239]
+#&gt;   date       channel category                service volume
+#&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
+#&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
+#&gt; 2 2014-06-17 Email   Built Structure Control Advert…      1
+#&gt; 3 2014-07-14 Email   Built Structure Control Advert…      1
+#&gt; 4 2014-07-21 Email   Built Structure Control Advert…      1
+#&gt; 5 2014-07-22 Email   Built Structure Control Advert…      1
+#&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
+#&gt; # ... with 1.116e+05 more rows
+```
+* **index**: an explicitly declared variable containing time indices.
+* **key**: uniquely identifies each unit that measurements take place on over time.
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+### - `tbl_ts`
+]
+.right-column[
+## Tidy temporal data
+
+
+```
+#&gt; # A tsibble: 111,653 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [239]
+#&gt;   date       channel category                service volume
+#&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
+#&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
+#&gt; 2 2014-06-17 Email   Built Structure Control Advert…      1
+#&gt; 3 2014-07-14 Email   Built Structure Control Advert…      1
+#&gt; 4 2014-07-21 Email   Built Structure Control Advert…      1
+#&gt; 5 2014-07-22 Email   Built Structure Control Advert…      1
+#&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
+#&gt; # ... with 1.116e+05 more rows
+```
+* Given the nature of temporal ordering, a tsibble object is **sorted by its key
+  and index in ascending time**.
+* If data of regular time interval, it shares **a common time interval** across the units.
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+]
+.right-column[
+## Turn implicit missing values into explicit missing values
+
+
+```r
+enquiry_tsbl %&gt;% fill_na()
+```
+
+```
+#&gt; # A tsibble: 279,500 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [239]
+#&gt;   date       channel category                service volume
+#&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
+#&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
+#&gt; 2 2014-06-17 Email   Built Structure Control Advert…      1
+#&gt; 3 2014-06-18 Email   Built Structure Control Advert…     NA
+#&gt; 4 2014-06-19 Email   Built Structure Control Advert…     NA
+#&gt; 5 2014-06-20 Email   Built Structure Control Advert…     NA
+#&gt; 6 2014-06-21 Email   Built Structure Control Advert…     NA
+#&gt; # ... with 2.795e+05 more rows
+```
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+]
+.right-column[
+## Turn implicit missing values into explicit missing values
+
+
+```r
+enquiry_full &lt;- enquiry_tsbl %&gt;% 
+  fill_na(volume = 0L)
+enquiry_full
+```
+
+```
+#&gt; # A tsibble: 279,500 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [239]
+#&gt;   date       channel category                service volume
+#&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
+#&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
+#&gt; 2 2014-06-17 Email   Built Structure Control Advert…      1
+#&gt; 3 2014-06-18 Email   Built Structure Control Advert…      0
+#&gt; 4 2014-06-19 Email   Built Structure Control Advert…      0
+#&gt; 5 2014-06-20 Email   Built Structure Control Advert…      0
+#&gt; 6 2014-06-21 Email   Built Structure Control Advert…      0
+#&gt; # ... with 2.795e+05 more rows
+```
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+### - `index_by()`
+]
+.right-column[
+## Group by time index
+
+
+```r
+library(lubridate)
+enquiry_full %&gt;% 
+  group_by(channel, category) %&gt;% 
+  index_by(year = year(date))
+```
+
+```
+#&gt; # A tsibble: 279,500 x 6 [1DAY]
+#&gt; # Key:       service | category, channel [239]
+#&gt; # Groups:    channel, category @ year [298]
+#&gt;   date       channel category     service      volume  year
+#&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;        &lt;fct&gt;         &lt;int&gt; &lt;dbl&gt;
+#&gt; 1 2014-06-16 Email   Built Struc… Advertising…      1  2014
+#&gt; 2 2014-06-17 Email   Built Struc… Advertising…      1  2014
+#&gt; 3 2014-06-18 Email   Built Struc… Advertising…      0  2014
+#&gt; 4 2014-06-19 Email   Built Struc… Advertising…      0  2014
+#&gt; 5 2014-06-20 Email   Built Struc… Advertising…      0  2014
+#&gt; 6 2014-06-21 Email   Built Struc… Advertising…      0  2014
+#&gt; # ... with 2.795e+05 more rows
+```
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+### - `index_by()`
+### - `index_by()` + `summarise()`
+]
+.right-column[
+## Aggregate over calendar periods
+
+
+```r
+enquiry_year &lt;- enquiry_full %&gt;% 
+  group_by(channel, category) %&gt;% 
+  index_by(year = year(date)) %&gt;% 
+  summarise(annual_volume = sum(volume))
+enquiry_year
+```
+
+```
+#&gt; # A tsibble: 298 x 4 [1YEAR]
+#&gt; # Key:       category, channel [60]
+#&gt; # Groups:    channel [5]
+#&gt;   channel category                 year annual_volume
+#&gt;   &lt;fct&gt;   &lt;fct&gt;                   &lt;dbl&gt;         &lt;int&gt;
+#&gt; 1 Email   Animal Control           2014           962
+#&gt; 2 Email   Animal Control           2015          2849
+#&gt; 3 Email   Animal Control           2016          3159
+#&gt; 4 Email   Animal Control           2017          3416
+#&gt; 5 Email   Animal Control           2018           860
+#&gt; 6 Email   Built Structure Control  2014           336
+#&gt; # ... with 292 more rows
+```
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+### - `index_by()`
+### - `index_by()` + `summarise()`
+### - viz
+]
+.right-column[
+## % of channel use changes over years
+
+&lt;img src="figure/col-fill-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Seamlessly works with tidyverse
+
+* **dplyr:** 
+  - `arrange()`, `filter()`, `slice()`
+  - `mutate()`, `transmute()`, `select()`, `rename()`, `summarise()`/`summarize()`
+  - `[left|right|full|inner|anti|semi]_join()`
+  - `group_by()`, `ungroup()`
+* **tidyr**: 
+  * `gather()`, `spread()`, `nest()`, `unnest()`
+
+
+```r
+enquiry_sum &lt;- enquiry_full %&gt;% 
+  summarise(ttl_volume = sum(volume))
+enquiry_sum
+```
+
+```
+#&gt; # A tsibble: 1,551 x 2 [1DAY]
+#&gt;   date       ttl_volume
+#&gt;   &lt;date&gt;          &lt;int&gt;
+#&gt; 1 2014-01-01        636
+#&gt; 2 2014-01-02       2171
+#&gt; 3 2014-01-03       1968
+#&gt; 4 2014-01-04        559
+#&gt; 5 2014-01-05        490
+#&gt; 6 2014-01-06       3325
+#&gt; # ... with 1,545 more rows
+```
+
+---
+
+## A family of sliding window functions
+
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+  + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
+
+
+```r
+enquiry_sum %&gt;% 
+  mutate(ma = slide_dbl(ttl_volume, mean, .size = 7))
+  ggplot(aes(x = date)) +
+  geom_line(aes(y = ttl_volume), colour = "grey80") +
+  geom_line(aes(y = ma))
+```
+
+&lt;img src="figure/slide-hide-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+## A family of sliding window functions
+
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+
+
+* `tile()`/`tile2()`/`ptile()`: tiling window without overlapping observations
+
+
+* `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
+
+---
+
+## Tidyverts
+
+---
+
+## Related works
+
+* **tibbletime**: time-aware tibbles
+
+
+* **timetk**: a toolkit for working with time series
+
+
+* **tsbox**: class-agnostic time series
+
+
+* **padr**: padding of missing records in time series
+
+---
+
+class: inverse middle center
+
+### Joint work with <i class="fa  fa-users "></i> [Di Cook](http://dicook.org) &amp; [Rob J Hyndman](http://robjhyndman.com)
+
 ### Slides created via xaringan ⚔️ &lt;http://slides.earo.me/useR18&gt;
 
---
+### Open source <i class="fa  fa-github "></i> [earowang/useR18](https://github.com/earowang/useR18)
 
-### Open source &lt;https://github.com/earowang/useR18&gt;
-
---
-
-### This work is under licensed [<i class="fa  fa-creative-commons "></i> BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+### This work is under licensed <i class="fa  fa-creative-commons "></i> [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

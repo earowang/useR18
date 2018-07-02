@@ -1,12 +1,12 @@
 ---
 title: "Tidy data structures to support exploration <br> and modeling of temporal-context data"
-subtitle: "<img src='img/tsibble.svg' height=125px>"
+subtitle: "<img src='img/tsibble.png' height=125px>"
 type: "contributed"
 author: "Earo Wang"
 date: "13 July, 2018 <br> slides at <http://slides.earo.me/useR18>"
 output:
   xaringan::moon_reader:
-    css: ["default", "remark.css"]
+    css: ["default", "remark.css", "extra.css"]
     self_contained: false
     nature:
       highlightStyle: github
@@ -24,61 +24,305 @@ opts_chunk$set(
   cache = TRUE, external = TRUE, dev = 'svglite'
 )
 read_chunk('R/theme.R')
+read_chunk('R/main.R')
 ```
 
 ```{r theme-remark}
 ```
 
-## Tidy data
+## Time series standards in R ecosystem.red[<sup>1</sup>]
 
-* Re-imagining data frame: `tibble`
-* Spatial data: `sp`
-* Text data: `tidytext`
-* Google drive: `googledrive::dribble`
+* **ts** represents regularly spaced time series using numeric time stamps.
+  + `ts(data, start = 1, frequency = 1)`
+
+
+* **zoo** provides infrastructure for regularly and irregularly spaced time series using arbitrary classes for the time stamps.
+  + `zoo(x, order.by = index(x))`
+
+
+* **xts** extends the `zoo` class but provides an mechanism to customize the object's meta-data.
+  + `xts(x, order.by = index(x))`
+
+
+* **irts**, **fts**, **timeSeries**, **tis**, and etc.
+
+.footnote[
+.red[1.] [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
+]
 
 ---
 
 ## Time series standards in R ecosystem
 
-* **ts**
-* **zoo**
-* **xts**
+The data structure that underlies these time series objects:
+
+\begin{equation}
+  \begin{bmatrix}
+  X_{11} & X_{21} & \cdots & X_{p1} \\
+  X_{12} & X_{22} & \cdots & X_{p2} \\
+  \vdots & \vdots & \ddots & \vdots \\
+  X_{1T} & X_{2T} & \cdots & X_{pT}
+  \end{bmatrix}
+\end{equation}
+
+where $X_{jt}$ represents series $j$, for $j = 1, \dots, p$ and $1 \leq t \leq T$, in the form of a $T \times p$ matrix.
+
+--
+
+This matrix structure assumes
+
+* homogeneity
+* time indices implicitly inferred as attributes/meta-information
+* explicit missing values
+
+It is **model-centric** rather than **data-centric**.
+
+???
 
 Too many defaults as if we live in an ideal data world
 
 ---
 
-## But the reality is ...
+class: inverse middle center
 
-* Heterogeneous data types
-* Implicit missing values
-* Multiple measured variables
-* Low time resolution
+## Do we have too many restrictions about data?
 
 ---
 
-## The ultimate 15th time series standard
+background-image: url(img/tree-bg.png)
+background-size: 100%
 
-<img src='img/tsibble.svg' height=165px>
+class: center
 
-## time series + tibble = tsibble
+## Brisbane City Councils Contact Centre enquiries.red[<sup>2</sup>]
+
+.footnote[
+.red[2.] data source: [Brisbane City Councils](https://www.data.brisbane.qld.gov.au/data/dataset/contact-centre-customer-enquiries)
+]
 
 ---
 
-## 
+
+## Brisbane City Councils Contact Centre enquiries
+
+```{r load}
+```
+
+```{r print, echo = TRUE}
+```
+
+--
+
+* heterogeneous data types
+* implicit missing values
+* nesting & crossing factors
+
+---
+
+## Brisbane City Councils Contact Centre enquiries
+
+```{r tree}
+```
+
+---
+
+class: middle center
+
+![](https://imgs.xkcd.com/comics/standards.png)
+
+.footnote[
+.red[reference:] [XKCD on "standards"](https://xkcd.com/927/)
+]
 
 ---
 
 class: inverse middle center
 
-### Joint work with Di Cook & Rob J Hyndman
+.scale-up[<img src="img/tsibble.png" height=220px>]
+
+## The 15th time series standard
+### .orange[time series + tibble = tsibble]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+]
+.right-column[
+## Coercion
+
+```{r tsibble, echo = TRUE}
+```
+* **index**: an explicitly declared variable containing time indices.
+* **key**: uniquely identifies each unit that measurements take place on over time.
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+### - `tbl_ts`
+]
+.right-column[
+## Tidy temporal data
+
+```{r tsibble}
+```
+* Given the nature of temporal ordering, a tsibble object is **sorted by its key
+  and index in ascending time**.
+* If data of regular time interval, it shares **a common time interval** across the units.
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+]
+.right-column[
+## Turn implicit missing values into explicit missing values
+
+```{r fill-na1, echo = TRUE}
+```
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+]
+.right-column[
+## Turn implicit missing values into explicit missing values
+
+```{r fill-na2, echo = TRUE}
+```
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+### - `index_by()`
+]
+.right-column[
+## Group by time index
+
+```{r index-by, echo = TRUE}
+```
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+### - `index_by()`
+### - `index_by()` + `summarise()`
+]
+.right-column[
+## Aggregate over calendar periods
+
+```{r year, echo = TRUE}
+```
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - `as_tsibble()`
+### - `tbl_ts`
+### - `fill_na()`
+### - `index_by()`
+### - `index_by()` + `summarise()`
+### - viz
+]
+.right-column[
+## % of channel use changes over years
+
+```{r col-fill}
+```
+]
+
+---
+
+## Seamlessly works with tidyverse
+
+* **dplyr:** 
+  - `arrange()`, `filter()`, `slice()`
+  - `mutate()`, `transmute()`, `select()`, `rename()`, `summarise()`/`summarize()`
+  - `[left|right|full|inner|anti|semi]_join()`
+  - `group_by()`, `ungroup()`
+* **tidyr**: 
+  * `gather()`, `spread()`, `nest()`, `unnest()`
+
+```{r sum, echo = TRUE}
+```
+
+---
+
+## A family of sliding window functions
+
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+  + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
+
+```{r slide-show, echo = TRUE, eval = FALSE}
+```
+
+```{r slide-hide, fig.height = 3}
+```
+
+---
+
+## A family of sliding window functions
+
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+
+
+* `tile()`/`tile2()`/`ptile()`: tiling window without overlapping observations
+
+
+* `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
+
+---
+
+## Tidyverts
+
+---
+
+## Related works
+
+* **tibbletime**: time-aware tibbles
+
+
+* **timetk**: a toolkit for working with time series
+
+
+* **tsbox**: class-agnostic time series
+
+
+* **padr**: padding of missing records in time series
+
+---
+
+class: inverse middle center
+
+### Joint work with `r icon::fa_users()` [Di Cook](http://dicook.org) & [Rob J Hyndman](http://robjhyndman.com)
 
 ### Slides created via xaringan `r emo::ji("crossed_swords")` <http://slides.earo.me/useR18>
 
---
+### Open source `r icon::fa_github()` [earowang/useR18](https://github.com/earowang/useR18)
 
-### Open source <https://github.com/earowang/useR18>
-
---
-
-### This work is under licensed [`r icon::fa("creative-commons")` BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+### This work is under licensed `r icon::fa("creative-commons")` [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
