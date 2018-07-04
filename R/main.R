@@ -121,3 +121,34 @@ enquiry_sum %>%
   ggplot(aes(x = date)) +
   geom_line(aes(y = ttl_volume), colour = "grey80") +
   geom_line(aes(y = ma))
+
+## ---- slide1
+enquiry_sum %>% 
+  mutate(yrmth = yearmonth(date)) %>% 
+  nest(-yrmth)
+
+## ---- slide2
+enquiry_sum %>% 
+  mutate(yrmth = yearmonth(date)) %>% 
+  nest(-yrmth) %>% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2))
+
+## ---- slide3
+enquiry_sum %>% 
+  mutate(yrmth = yearmonth(date)) %>% 
+  nest(-yrmth) %>% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+  unnest(data)
+
+## ---- slide4
+enquiry_sum %>% 
+  mutate(yrmth = yearmonth(date)) %>% 
+  nest(-yrmth) %>% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+  unnest(data) %>% 
+  ggplot() +
+  geom_line(aes(x = date, y = ttl_volume), colour = "grey80") +
+  geom_line(aes(x = yrmth, y = ma)) +
+  xlab("Date") +
+  ylab("Total volume") +
+  theme_remark()

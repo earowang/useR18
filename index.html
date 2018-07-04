@@ -217,7 +217,7 @@ enquiry_tsbl
 #&gt; # ... with 1.116e+05 more rows
 ```
 * Given the nature of temporal ordering, a tsibble object is **sorted by its key
-  and index in ascending time**.
+  and index from past to future**.
 * If data of regular time interval, it shares **a common time interval** across the units.
 ]
 
@@ -371,7 +371,7 @@ enquiry_year
 ### - viz
 ]
 .right-column[
-## % of channel use changes over years
+## Temporal change in % channel use
 
 &lt;img src="figure/col-fill-1.svg" style="display: block; margin: auto;" /&gt;
 ]
@@ -410,7 +410,7 @@ enquiry_sum
 
 ---
 
-## A family of sliding window functions
+## Sliding window calculations
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
   + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
@@ -425,6 +425,91 @@ enquiry_sum %&gt;%
 ```
 
 &lt;img src="figure/slide-hide-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Slide over calendar periods (row-oriented workflow)
+
+
+```r
+*enquiry_sum %&gt;% 
+* mutate(yrmth = yearmonth(date)) %&gt;% 
+* nest(-yrmth) %&gt;% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %&gt;% 
+  unnest(data)
+```
+
+
+
+```
+#&gt; # A tibble: 51 x 2
+#&gt;      yrmth data              
+#&gt;      &lt;mth&gt; &lt;list&gt;            
+#&gt; 1 2014 Jan &lt;tsibble [31 × 2]&gt;
+#&gt; 2 2014 Feb &lt;tsibble [28 × 2]&gt;
+#&gt; 3 2014 Mar &lt;tsibble [31 × 2]&gt;
+#&gt; 4 2014 Apr &lt;tsibble [30 × 2]&gt;
+#&gt; 5 2014 May &lt;tsibble [31 × 2]&gt;
+#&gt; 6 2014 Jun &lt;tsibble [30 × 2]&gt;
+#&gt; # ... with 45 more rows
+```
+
+---
+
+## Slide over calendar periods (row-oriented workflow)
+
+
+```r
+enquiry_sum %&gt;% 
+  mutate(yrmth = yearmonth(date)) %&gt;% 
+  nest(-yrmth) %&gt;% 
+* mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %&gt;% 
+  unnest(data)
+```
+
+
+
+```
+#&gt; # A tibble: 51 x 3
+#&gt;      yrmth data                  ma
+#&gt;      &lt;mth&gt; &lt;list&gt;             &lt;dbl&gt;
+#&gt; 1 2014 Jan &lt;tsibble [31 × 2]&gt;   NA 
+#&gt; 2 2014 Feb &lt;tsibble [28 × 2]&gt; 2396.
+#&gt; 3 2014 Mar &lt;tsibble [31 × 2]&gt; 2405.
+#&gt; 4 2014 Apr &lt;tsibble [30 × 2]&gt; 2363.
+#&gt; 5 2014 May &lt;tsibble [31 × 2]&gt; 2566.
+#&gt; 6 2014 Jun &lt;tsibble [30 × 2]&gt; 2510.
+#&gt; # ... with 45 more rows
+```
+
+---
+
+## Slide over calendar periods (row-oriented workflow)
+
+
+```r
+enquiry_sum %&gt;% 
+  mutate(yrmth = yearmonth(date)) %&gt;% 
+  nest(-yrmth) %&gt;% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %&gt;% 
+* unnest(data)
+```
+
+
+```
+#&gt; # A tsibble: 1,551 x 4 [1DAY]
+#&gt;      yrmth    ma date       ttl_volume
+#&gt;      &lt;mth&gt; &lt;dbl&gt; &lt;date&gt;          &lt;int&gt;
+#&gt; 1 2014 Jan    NA 2014-01-01        636
+#&gt; 2 2014 Jan    NA 2014-01-02       2171
+#&gt; 3 2014 Jan    NA 2014-01-03       1968
+#&gt; 4 2014 Jan    NA 2014-01-04        559
+#&gt; 5 2014 Jan    NA 2014-01-05        490
+#&gt; 6 2014 Jan    NA 2014-01-06       3325
+#&gt; # ... with 1,545 more rows
+```
+
+&lt;img src="figure/slide4-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 

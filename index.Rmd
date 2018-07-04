@@ -171,7 +171,7 @@ class: inverse middle center
 ```{r tsibble}
 ```
 * Given the nature of temporal ordering, a tsibble object is **sorted by its key
-  and index in ascending time**.
+  and index from past to future**.
 * If data of regular time interval, it shares **a common time interval** across the units.
 ]
 
@@ -250,7 +250,7 @@ class: inverse middle center
 ### - viz
 ]
 .right-column[
-## % of channel use changes over years
+## Temporal change in % channel use
 
 ```{r col-fill}
 ```
@@ -273,7 +273,7 @@ class: inverse middle center
 
 ---
 
-## A family of sliding window functions
+## Sliding window calculations
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
   + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
@@ -282,6 +282,56 @@ class: inverse middle center
 ```
 
 ```{r slide-hide, fig.height = 3}
+```
+
+---
+
+## Slide over calendar periods (row-oriented workflow)
+
+```{r, eval = FALSE, echo = TRUE}
+*enquiry_sum %>% 
+* mutate(yrmth = yearmonth(date)) %>% 
+* nest(-yrmth) %>% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+  unnest(data)
+```
+
+
+```{r slide1}
+```
+
+---
+
+## Slide over calendar periods (row-oriented workflow)
+
+```{r, eval = FALSE, echo = TRUE}
+enquiry_sum %>% 
+  mutate(yrmth = yearmonth(date)) %>% 
+  nest(-yrmth) %>% 
+* mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+  unnest(data)
+```
+
+
+```{r slide2}
+```
+
+---
+
+## Slide over calendar periods (row-oriented workflow)
+
+```{r, eval = FALSE, echo = TRUE}
+enquiry_sum %>% 
+  mutate(yrmth = yearmonth(date)) %>% 
+  nest(-yrmth) %>% 
+  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+* unnest(data)
+```
+
+```{r slide3}
+```
+
+```{r slide4, fig.height = 3}
 ```
 
 ---
