@@ -2,7 +2,7 @@
 title: "Tidy data structures to support exploration <br> and modeling of temporal-context data"
 subtitle: "<img src='img/tsibble.png' height=125px>"
 type: "contributed"
-author: "Earo Wang"
+author: "Earo Wang <br> `r icon::fa_twitter(colour = '#55acee')` @earowang"
 date: "13 July, 2018 <br> slides at <http://slides.earo.me/useR18>"
 output:
   xaringan::moon_reader:
@@ -85,7 +85,7 @@ Too many defaults as if we live in an ideal data world
 
 class: inverse middle center
 
-## Do we have too many restrictions about data?
+## Do we have too many restrictions on data?
 
 ---
 
@@ -215,7 +215,7 @@ class: inverse middle center
 ### - `index_by()`
 ]
 .right-column[
-## Group by time index
+## Group time index
 
 ```{r index-by, echo = TRUE}
 ```
@@ -258,22 +258,34 @@ class: inverse middle center
 
 ---
 
-## Seamlessly works with tidyverse
+## Seamlessly work with tidyverse
 
 * **dplyr:** 
   - `arrange()`, `filter()`, `slice()`
   - `mutate()`, `transmute()`, `select()`, `rename()`, `summarise()`/`summarize()`
   - `[left|right|full|inner|anti|semi]_join()`
   - `group_by()`, `ungroup()`
-* **tidyr**: 
-  * `gather()`, `spread()`, `nest()`, `unnest()`
+* **tidyr**: `gather()`, `spread()`, `nest()`, `unnest()`
 
 ```{r sum, echo = TRUE}
 ```
 
 ---
 
-## Sliding window calculations
+class: inverse middle center
+
+## A family of window functions
+<hr>
+## A purrr-fect workflow
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - sliding
+]
+.right-column[
+## Fixed window size
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
   + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
@@ -281,61 +293,34 @@ class: inverse middle center
 ```{r slide-show, echo = TRUE, eval = FALSE}
 ```
 
-```{r slide-hide, fig.height = 3}
+```{r slide-hide, fig.height = 5}
 ```
+]
 
 ---
 
-## Slide over calendar periods (row-oriented workflow)
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - sliding
+]
+.right-column[
+## Flexible calendar periods
 
-```{r, eval = FALSE, echo = TRUE}
-*enquiry_sum %>% 
-* mutate(yrmth = yearmonth(date)) %>% 
-* nest(-yrmth) %>% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
-  unnest(data)
+```{r slide-month-hide, eval = FALSE, echo = TRUE}
 ```
 
-
-```{r slide1}
+```{r slide-month, fig.height = 5}
 ```
+]
 
 ---
 
-## Slide over calendar periods (row-oriented workflow)
-
-```{r, eval = FALSE, echo = TRUE}
-enquiry_sum %>% 
-  mutate(yrmth = yearmonth(date)) %>% 
-  nest(-yrmth) %>% 
-* mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
-  unnest(data)
-```
-
-
-```{r slide2}
-```
-
----
-
-## Slide over calendar periods (row-oriented workflow)
-
-```{r, eval = FALSE, echo = TRUE}
-enquiry_sum %>% 
-  mutate(yrmth = yearmonth(date)) %>% 
-  nest(-yrmth) %>% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
-* unnest(data)
-```
-
-```{r slide3}
-```
-
-```{r slide4, fig.height = 3}
-```
-
----
-
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - sliding
+### - sliding family
+]
+.right-column[
 ## A family of sliding window functions
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
@@ -346,9 +331,21 @@ enquiry_sum %>%
 
 * `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
 
+]
+
 ---
 
-## Tidyverts
+background-image: url(img/tidyverse.png)
+background-size: 90%
+
+## Data science workflow
+
+---
+
+background-image: url(img/tidyverts.png)
+background-size: 80%
+
+## Tidyverts ecosystem
 
 ---
 
@@ -368,6 +365,8 @@ enquiry_sum %>%
 ---
 
 class: inverse middle center
+
+### More on tsibble `r icon::fa_info_circle()` <http://bit.ly/tsibble>
 
 ### Joint work with `r icon::fa_users()` [Di Cook](http://dicook.org) & [Rob J Hyndman](http://robjhyndman.com)
 

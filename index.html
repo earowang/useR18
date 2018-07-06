@@ -3,13 +3,13 @@
   <head>
     <title>Tidy data structures to support exploration   and modeling of temporal-context data</title>
     <meta charset="utf-8">
-    <meta name="author" content="Earo Wang" />
+    <meta name="author" content="Earo Wang   <i class="fab  fa-twitter " style="color:#55acee;"></i> @earowang" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <link href="index_files/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
     <script src="index_files/d3/d3.min.js"></script>
     <link href="index_files/collapsibleTree/collapsibleTree.css" rel="stylesheet" />
     <script src="index_files/collapsibleTree-binding/collapsibleTree.js"></script>
-    <link href="index_files/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="remark.css" type="text/css" />
     <link rel="stylesheet" href="extra.css" type="text/css" />
   </head>
@@ -19,7 +19,7 @@ class: center, middle, inverse, title-slide
 
 # Tidy data structures to support exploration <br> and modeling of temporal-context data
 ## <img src='img/tsibble.png' height=125px>
-### Earo Wang
+### Earo Wang <br> <i class="fab  fa-twitter " style="color:#55acee;"></i> <span class="citation">@earowang</span>
 ### 13 July, 2018 <br> slides at <a href="http://slides.earo.me/useR18" class="uri">http://slides.earo.me/useR18</a>
 
 ---
@@ -84,7 +84,7 @@ Too many defaults as if we live in an ideal data world
 
 class: inverse middle center
 
-## Do we have too many restrictions about data?
+## Do we have too many restrictions on data?
 
 ---
 
@@ -112,7 +112,7 @@ enquiry
 ```
 
 ```
-#&gt; # A tibble: 111,653 x 5
+#&gt; # A tibble: 110,397 x 5
 #&gt;   date       channel category                service volume
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
 #&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
@@ -121,7 +121,7 @@ enquiry
 #&gt; 4 2014-07-21 Email   Built Structure Control Advert…      1
 #&gt; 5 2014-07-22 Email   Built Structure Control Advert…      1
 #&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
-#&gt; # ... with 1.116e+05 more rows
+#&gt; # ... with 1.104e+05 more rows
 ```
 
 --
@@ -134,8 +134,8 @@ enquiry
 
 ## Brisbane City Councils Contact Centre enquiries
 
-<div id="htmlwidget-f8295a30f7c02b1aaed7" style="width:864px;height:600px;" class="collapsibleTree html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f8295a30f7c02b1aaed7">{"x":{"data":{"name":"Brisbane City Councils","fill":"#1b9e77","children":[{"name":"Animal Control","fill":"#d95f02","children":[{"name":"Animal Permit","fill":"#7570b3"},{"name":"Animal Reunion","fill":"#7570b3"},{"name":"Commercial Animal Control","fill":"#7570b3"},{"name":"Domestic Animal Control","fill":"#7570b3"},{"name":"Livestock Control","fill":"#7570b3"},{"name":"Lost Animal Reunion","fill":"#7570b3"}]},{"name":"Built Structure Control","fill":"#d95f02","children":[{"name":"Advertising Sign Enforcement","fill":"#7570b3"},{"name":"Advertising Sign Local Law","fill":"#7570b3"},{"name":"Advertising Sign Permit","fill":"#7570b3"},{"name":"Advertising Sign Regulation","fill":"#7570b3"},{"name":"Building Plan Search","fill":"#7570b3"},{"name":"Built Structure Enforcement","fill":"#7570b3"},{"name":"Built Structure Legislation Consultation","fill":"#7570b3"},{"name":"Built Structure Permit","fill":"#7570b3"},{"name":"Built Structure Regulation","fill":"#7570b3"}]},{"name":"Call Centre Services","fill":"#d95f02","children":[{"name":"Customer Management","fill":"#7570b3"},{"name":"Customer Request Management","fill":"#7570b3"},{"name":"Lost Property Management","fill":"#7570b3"},{"name":"Switchboard Services","fill":"#7570b3"}]},{"name":"Parking Control","fill":"#d95f02","children":[{"name":"Commercial Parking Permit","fill":"#7570b3"},{"name":"On Street Parking Management","fill":"#7570b3"},{"name":"Parking Control Enforcement","fill":"#7570b3"},{"name":"Parking Control Local Law","fill":"#7570b3"},{"name":"Residential Parking Permit","fill":"#7570b3"}]},{"name":"Plumbing Control Services","fill":"#d95f02","children":[{"name":"Plumbing Control","fill":"#7570b3"},{"name":"Plumbing Enforcement","fill":"#7570b3"},{"name":"Plumbing Permit","fill":"#7570b3"},{"name":"Plumbing Regulation","fill":"#7570b3"}]},{"name":"Property Information Services","fill":"#d95f02","children":[{"name":"Development History","fill":"#7570b3"},{"name":"Flood Information and Advice","fill":"#7570b3"},{"name":"Property Searches","fill":"#7570b3"},{"name":"Rates Services","fill":"#7570b3"},{"name":"Spatial Information Services","fill":"#7570b3"}]},{"name":"Rates Assessment","fill":"#d95f02","children":[{"name":"Rates Entitlements","fill":"#7570b3"},{"name":"Rates Maintenance","fill":"#7570b3"}]},{"name":"Rates Payment Services","fill":"#d95f02","children":[{"name":"Rates Payment Collection","fill":"#7570b3"}]},{"name":"Road Network Management","fill":"#d95f02","children":[{"name":"Bridge","fill":"#7570b3"},{"name":"Footpath","fill":"#7570b3"},{"name":"Kerb and Channel","fill":"#7570b3"},{"name":"Road","fill":"#7570b3"},{"name":"Road Network Initiative","fill":"#7570b3"},{"name":"Road Network Safety Device","fill":"#7570b3"},{"name":"Sign and Line","fill":"#7570b3"},{"name":"Signal","fill":"#7570b3"},{"name":"Streetlight","fill":"#7570b3"}]},{"name":"Tree Management","fill":"#d95f02","children":[{"name":"Tree Maintenance","fill":"#7570b3"},{"name":"Tree Management Control","fill":"#7570b3"},{"name":"Tree Management Programs","fill":"#7570b3"}]},{"name":"Waste Collection","fill":"#d95f02","children":[{"name":"Kerbside Collection","fill":"#7570b3"},{"name":"Public Space Waste Collection","fill":"#7570b3"},{"name":"Waste Asset Provision","fill":"#7570b3"},{"name":"Waste Collection Service Management","fill":"#7570b3"},{"name":"Waste Community Consultation","fill":"#7570b3"}]},{"name":"Other","fill":"#d95f02","children":[{"name":"Call Centre Services","fill":"#7570b3"},{"name":"Other","fill":"#7570b3"}]}]},"options":{"hierarchy":["category","service"],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":16,"tooltip":false,"collapsed":true,"zoomable":true,"margin":{"top":20,"bottom":20,"left":201,"right":345}}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ccfe52936af7d0d62ae2" style="width:864px;height:600px;" class="collapsibleTree html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ccfe52936af7d0d62ae2">{"x":{"data":{"name":"Brisbane City Councils","fill":"#1b9e77","children":[{"name":"Animal Control","fill":"#d95f02","children":[{"name":"Animal Permit","fill":"#7570b3"},{"name":"Animal Reunion","fill":"#7570b3"},{"name":"Commercial Animal Control","fill":"#7570b3"},{"name":"Domestic Animal Control","fill":"#7570b3"},{"name":"Livestock Control","fill":"#7570b3"},{"name":"Lost Animal Reunion","fill":"#7570b3"}]},{"name":"Built Structure Control","fill":"#d95f02","children":[{"name":"Advertising Sign Enforcement","fill":"#7570b3"},{"name":"Advertising Sign Local Law","fill":"#7570b3"},{"name":"Advertising Sign Permit","fill":"#7570b3"},{"name":"Advertising Sign Regulation","fill":"#7570b3"},{"name":"Building Plan Search","fill":"#7570b3"},{"name":"Built Structure Enforcement","fill":"#7570b3"},{"name":"Built Structure Legislation Consultation","fill":"#7570b3"},{"name":"Built Structure Permit","fill":"#7570b3"},{"name":"Built Structure Regulation","fill":"#7570b3"}]},{"name":"Call Centre Services","fill":"#d95f02","children":[{"name":"Customer Management","fill":"#7570b3"},{"name":"Customer Request Management","fill":"#7570b3"},{"name":"Lost Property Management","fill":"#7570b3"},{"name":"Switchboard Services","fill":"#7570b3"}]},{"name":"Parking Control","fill":"#d95f02","children":[{"name":"Commercial Parking Permit","fill":"#7570b3"},{"name":"On Street Parking Management","fill":"#7570b3"},{"name":"Parking Control Enforcement","fill":"#7570b3"},{"name":"Parking Control Local Law","fill":"#7570b3"},{"name":"Residential Parking Permit","fill":"#7570b3"}]},{"name":"Plumbing Control Services","fill":"#d95f02","children":[{"name":"Plumbing Control","fill":"#7570b3"},{"name":"Plumbing Enforcement","fill":"#7570b3"},{"name":"Plumbing Permit","fill":"#7570b3"},{"name":"Plumbing Regulation","fill":"#7570b3"}]},{"name":"Property Information Services","fill":"#d95f02","children":[{"name":"Development History","fill":"#7570b3"},{"name":"Flood Information and Advice","fill":"#7570b3"},{"name":"Property Searches","fill":"#7570b3"},{"name":"Rates Services","fill":"#7570b3"},{"name":"Spatial Information Services","fill":"#7570b3"}]},{"name":"Rates Assessment","fill":"#d95f02","children":[{"name":"Rates Entitlements","fill":"#7570b3"},{"name":"Rates Maintenance","fill":"#7570b3"}]},{"name":"Rates Payment Services","fill":"#d95f02","children":[{"name":"Rates Payment Collection","fill":"#7570b3"}]},{"name":"Road Network Management","fill":"#d95f02","children":[{"name":"Bridge","fill":"#7570b3"},{"name":"Footpath","fill":"#7570b3"},{"name":"Kerb and Channel","fill":"#7570b3"},{"name":"Road","fill":"#7570b3"},{"name":"Road Network Initiative","fill":"#7570b3"},{"name":"Road Network Safety Device","fill":"#7570b3"},{"name":"Sign and Line","fill":"#7570b3"},{"name":"Signal","fill":"#7570b3"},{"name":"Streetlight","fill":"#7570b3"}]},{"name":"Tree Management","fill":"#d95f02","children":[{"name":"Tree Maintenance","fill":"#7570b3"},{"name":"Tree Management Control","fill":"#7570b3"},{"name":"Tree Management Programs","fill":"#7570b3"}]},{"name":"Waste Collection","fill":"#d95f02","children":[{"name":"Kerbside Collection","fill":"#7570b3"},{"name":"Public Space Waste Collection","fill":"#7570b3"},{"name":"Waste Asset Provision","fill":"#7570b3"},{"name":"Waste Collection Service Management","fill":"#7570b3"},{"name":"Waste Community Consultation","fill":"#7570b3"}]},{"name":"Other","fill":"#d95f02","children":[{"name":"Call Centre Services","fill":"#7570b3"},{"name":"Other","fill":"#7570b3"}]}]},"options":{"hierarchy":["category","service"],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":16,"tooltip":false,"collapsed":true,"zoomable":true,"margin":{"top":20,"bottom":20,"left":201,"right":345}}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -176,8 +176,8 @@ enquiry_tsbl
 ```
 
 ```
-#&gt; # A tsibble: 111,653 x 5 [1DAY]
-#&gt; # Key:       service | category, channel [239]
+#&gt; # A tsibble: 110,397 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [204]
 #&gt;   date       channel category                service volume
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
 #&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
@@ -186,7 +186,7 @@ enquiry_tsbl
 #&gt; 4 2014-07-21 Email   Built Structure Control Advert…      1
 #&gt; 5 2014-07-22 Email   Built Structure Control Advert…      1
 #&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
-#&gt; # ... with 1.116e+05 more rows
+#&gt; # ... with 1.104e+05 more rows
 ```
 * **index**: an explicitly declared variable containing time indices.
 * **key**: uniquely identifies each unit that measurements take place on over time.
@@ -204,8 +204,8 @@ enquiry_tsbl
 
 
 ```
-#&gt; # A tsibble: 111,653 x 5 [1DAY]
-#&gt; # Key:       service | category, channel [239]
+#&gt; # A tsibble: 110,397 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [204]
 #&gt;   date       channel category                service volume
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
 #&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
@@ -214,7 +214,7 @@ enquiry_tsbl
 #&gt; 4 2014-07-21 Email   Built Structure Control Advert…      1
 #&gt; 5 2014-07-22 Email   Built Structure Control Advert…      1
 #&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
-#&gt; # ... with 1.116e+05 more rows
+#&gt; # ... with 1.104e+05 more rows
 ```
 * Given the nature of temporal ordering, a tsibble object is **sorted by its key
   and index from past to future**.
@@ -238,8 +238,8 @@ enquiry_tsbl %&gt;% fill_na()
 ```
 
 ```
-#&gt; # A tsibble: 279,500 x 5 [1DAY]
-#&gt; # Key:       service | category, channel [239]
+#&gt; # A tsibble: 237,821 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [204]
 #&gt;   date       channel category                service volume
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
 #&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
@@ -248,7 +248,7 @@ enquiry_tsbl %&gt;% fill_na()
 #&gt; 4 2014-06-19 Email   Built Structure Control Advert…     NA
 #&gt; 5 2014-06-20 Email   Built Structure Control Advert…     NA
 #&gt; 6 2014-06-21 Email   Built Structure Control Advert…     NA
-#&gt; # ... with 2.795e+05 more rows
+#&gt; # ... with 2.378e+05 more rows
 ```
 ]
 
@@ -271,8 +271,8 @@ enquiry_full
 ```
 
 ```
-#&gt; # A tsibble: 279,500 x 5 [1DAY]
-#&gt; # Key:       service | category, channel [239]
+#&gt; # A tsibble: 237,821 x 5 [1DAY]
+#&gt; # Key:       service | category, channel [204]
 #&gt;   date       channel category                service volume
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
 #&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
@@ -281,7 +281,7 @@ enquiry_full
 #&gt; 4 2014-06-19 Email   Built Structure Control Advert…      0
 #&gt; 5 2014-06-20 Email   Built Structure Control Advert…      0
 #&gt; 6 2014-06-21 Email   Built Structure Control Advert…      0
-#&gt; # ... with 2.795e+05 more rows
+#&gt; # ... with 2.378e+05 more rows
 ```
 ]
 
@@ -295,7 +295,7 @@ enquiry_full
 ### - `index_by()`
 ]
 .right-column[
-## Group by time index
+## Group time index
 
 
 ```r
@@ -306,9 +306,9 @@ enquiry_full %&gt;%
 ```
 
 ```
-#&gt; # A tsibble: 279,500 x 6 [1DAY]
-#&gt; # Key:       service | category, channel [239]
-#&gt; # Groups:    channel, category @ year [298]
+#&gt; # A tsibble: 237,821 x 6 [1DAY]
+#&gt; # Key:       service | category, channel [204]
+#&gt; # Groups:    channel, category @ year [239]
 #&gt;   date       channel category     service      volume  year
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;        &lt;fct&gt;         &lt;int&gt; &lt;dbl&gt;
 #&gt; 1 2014-06-16 Email   Built Struc… Advertising…      1  2014
@@ -317,7 +317,7 @@ enquiry_full %&gt;%
 #&gt; 4 2014-06-19 Email   Built Struc… Advertising…      0  2014
 #&gt; 5 2014-06-20 Email   Built Struc… Advertising…      0  2014
 #&gt; 6 2014-06-21 Email   Built Struc… Advertising…      0  2014
-#&gt; # ... with 2.795e+05 more rows
+#&gt; # ... with 2.378e+05 more rows
 ```
 ]
 
@@ -344,9 +344,9 @@ enquiry_year
 ```
 
 ```
-#&gt; # A tsibble: 298 x 4 [1YEAR]
-#&gt; # Key:       category, channel [60]
-#&gt; # Groups:    channel [5]
+#&gt; # A tsibble: 239 x 4 [1YEAR]
+#&gt; # Key:       category, channel [48]
+#&gt; # Groups:    channel [4]
 #&gt;   channel category                 year annual_volume
 #&gt;   &lt;fct&gt;   &lt;fct&gt;                   &lt;dbl&gt;         &lt;int&gt;
 #&gt; 1 Email   Animal Control           2014           962
@@ -355,7 +355,7 @@ enquiry_year
 #&gt; 4 Email   Animal Control           2017          3416
 #&gt; 5 Email   Animal Control           2018           860
 #&gt; 6 Email   Built Structure Control  2014           336
-#&gt; # ... with 292 more rows
+#&gt; # ... with 233 more rows
 ```
 ]
 
@@ -378,15 +378,14 @@ enquiry_year
 
 ---
 
-## Seamlessly works with tidyverse
+## Seamlessly work with tidyverse
 
 * **dplyr:** 
   - `arrange()`, `filter()`, `slice()`
   - `mutate()`, `transmute()`, `select()`, `rename()`, `summarise()`/`summarize()`
   - `[left|right|full|inner|anti|semi]_join()`
   - `group_by()`, `ungroup()`
-* **tidyr**: 
-  * `gather()`, `spread()`, `nest()`, `unnest()`
+* **tidyr**: `gather()`, `spread()`, `nest()`, `unnest()`
 
 
 ```r
@@ -403,14 +402,27 @@ enquiry_sum
 #&gt; 2 2014-01-02       2171
 #&gt; 3 2014-01-03       1968
 #&gt; 4 2014-01-04        559
-#&gt; 5 2014-01-05        490
-#&gt; 6 2014-01-06       3325
+#&gt; 5 2014-01-05        489
+#&gt; 6 2014-01-06       3320
 #&gt; # ... with 1,545 more rows
 ```
 
 ---
 
-## Sliding window calculations
+class: inverse middle center
+
+## A family of window functions
+&lt;hr&gt;
+## A purrr-fect workflow
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - sliding
+]
+.right-column[
+## Fixed window size
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
   + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
@@ -419,100 +431,42 @@ enquiry_sum
 ```r
 enquiry_sum %&gt;% 
   mutate(ma = slide_dbl(ttl_volume, mean, .size = 7))
-  ggplot(aes(x = date)) +
-  geom_line(aes(y = ttl_volume), colour = "grey80") +
-  geom_line(aes(y = ma))
 ```
 
 &lt;img src="figure/slide-hide-1.svg" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 
-## Slide over calendar periods (row-oriented workflow)
-
-
-```r
-*enquiry_sum %&gt;% 
-* mutate(yrmth = yearmonth(date)) %&gt;% 
-* nest(-yrmth) %&gt;% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %&gt;% 
-  unnest(data)
-```
-
-
-
-```
-#&gt; # A tibble: 51 x 2
-#&gt;      yrmth data              
-#&gt;      &lt;mth&gt; &lt;list&gt;            
-#&gt; 1 2014 Jan &lt;tsibble [31 × 2]&gt;
-#&gt; 2 2014 Feb &lt;tsibble [28 × 2]&gt;
-#&gt; 3 2014 Mar &lt;tsibble [31 × 2]&gt;
-#&gt; 4 2014 Apr &lt;tsibble [30 × 2]&gt;
-#&gt; 5 2014 May &lt;tsibble [31 × 2]&gt;
-#&gt; 6 2014 Jun &lt;tsibble [30 × 2]&gt;
-#&gt; # ... with 45 more rows
-```
-
----
-
-## Slide over calendar periods (row-oriented workflow)
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - sliding
+]
+.right-column[
+## Flexible calendar periods
 
 
 ```r
 enquiry_sum %&gt;% 
   mutate(yrmth = yearmonth(date)) %&gt;% 
   nest(-yrmth) %&gt;% 
-* mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %&gt;% 
+  mutate(ma = slide_dbl(
+    data, ~ mean(bind_rows(.)$ttl_volume), .size = 2
+  )) %&gt;% 
   unnest(data)
 ```
 
-
-
-```
-#&gt; # A tibble: 51 x 3
-#&gt;      yrmth data                  ma
-#&gt;      &lt;mth&gt; &lt;list&gt;             &lt;dbl&gt;
-#&gt; 1 2014 Jan &lt;tsibble [31 × 2]&gt;   NA 
-#&gt; 2 2014 Feb &lt;tsibble [28 × 2]&gt; 2396.
-#&gt; 3 2014 Mar &lt;tsibble [31 × 2]&gt; 2405.
-#&gt; 4 2014 Apr &lt;tsibble [30 × 2]&gt; 2363.
-#&gt; 5 2014 May &lt;tsibble [31 × 2]&gt; 2566.
-#&gt; 6 2014 Jun &lt;tsibble [30 × 2]&gt; 2510.
-#&gt; # ... with 45 more rows
-```
+&lt;img src="figure/slide-month-1.svg" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 
-## Slide over calendar periods (row-oriented workflow)
-
-
-```r
-enquiry_sum %&gt;% 
-  mutate(yrmth = yearmonth(date)) %&gt;% 
-  nest(-yrmth) %&gt;% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %&gt;% 
-* unnest(data)
-```
-
-
-```
-#&gt; # A tsibble: 1,551 x 4 [1DAY]
-#&gt;      yrmth    ma date       ttl_volume
-#&gt;      &lt;mth&gt; &lt;dbl&gt; &lt;date&gt;          &lt;int&gt;
-#&gt; 1 2014 Jan    NA 2014-01-01        636
-#&gt; 2 2014 Jan    NA 2014-01-02       2171
-#&gt; 3 2014 Jan    NA 2014-01-03       1968
-#&gt; 4 2014 Jan    NA 2014-01-04        559
-#&gt; 5 2014 Jan    NA 2014-01-05        490
-#&gt; 6 2014 Jan    NA 2014-01-06       3325
-#&gt; # ... with 1,545 more rows
-```
-
-&lt;img src="figure/slide4-1.svg" style="display: block; margin: auto;" /&gt;
-
----
-
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - sliding
+### - sliding family
+]
+.right-column[
 ## A family of sliding window functions
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
@@ -523,9 +477,21 @@ enquiry_sum %&gt;%
 
 * `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
 
+]
+
 ---
 
-## Tidyverts
+background-image: url(img/tidyverse.png)
+background-size: 90%
+
+## Data science workflow
+
+---
+
+background-image: url(img/tidyverts.png)
+background-size: 80%
+
+## Tidyverts ecosystem
 
 ---
 
@@ -546,13 +512,15 @@ enquiry_sum %&gt;%
 
 class: inverse middle center
 
-### Joint work with <i class="fa  fa-users "></i> [Di Cook](http://dicook.org) &amp; [Rob J Hyndman](http://robjhyndman.com)
+### More on tsibble <i class="fas  fa-info-circle "></i> &lt;http://bit.ly/tsibble&gt;
+
+### Joint work with <i class="fas  fa-users "></i> [Di Cook](http://dicook.org) &amp; [Rob J Hyndman](http://robjhyndman.com)
 
 ### Slides created via xaringan ⚔️ &lt;http://slides.earo.me/useR18&gt;
 
-### Open source <i class="fa  fa-github "></i> [earowang/useR18](https://github.com/earowang/useR18)
+### Open source <i class="fab  fa-github "></i> [earowang/useR18](https://github.com/earowang/useR18)
 
-### This work is under licensed <i class="fa  fa-creative-commons "></i> [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+### This work is under licensed <i class="fab  fa-creative-commons "></i> [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

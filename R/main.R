@@ -2,8 +2,11 @@ source("R/theme.R")
 
 ## ---- load
 library(tidyverse)
+library(ochRe)
 library(collapsibleTree)
 enquiry <- read_rds("data/enquiry.rds") %>% 
+  filter(channel != "Other") %>% 
+  mutate(channel = fct_drop(channel)) %>% 
   arrange(service, category, channel, date)
 
 ## ---- print
@@ -95,7 +98,7 @@ enquiry_year %>%
   ggplot(aes(x = year, y = annual_volume, fill = channel)) +
   geom_col(position = "fill") +
   facet_wrap(~ category, labeller = labeller(category = label_wrap_gen(20))) +
-  scale_fill_brewer(name = "Channel", palette = "Dark2") +
+  scale_fill_ochre(palette = "healthy_reef") +
   xlab("Year") +
   ylab("Proportion of volume") +
   theme_remark()
@@ -110,7 +113,7 @@ enquiry_sum %>%
   mutate(ma = slide_dbl(ttl_volume, mean, .size = 7)) %>% 
   ggplot(aes(x = date)) +
   geom_line(aes(y = ttl_volume), colour = "grey80") +
-  geom_line(aes(y = ma)) +
+  geom_line(aes(y = ma), colour = "#3182bd", size = 1) +
   xlab("Date") +
   ylab("Total volume") +
   theme_remark()
@@ -118,37 +121,25 @@ enquiry_sum %>%
 ## ---- slide-show
 enquiry_sum %>% 
   mutate(ma = slide_dbl(ttl_volume, mean, .size = 7))
-  ggplot(aes(x = date)) +
-  geom_line(aes(y = ttl_volume), colour = "grey80") +
-  geom_line(aes(y = ma))
 
-## ---- slide1
-enquiry_sum %>% 
-  mutate(yrmth = yearmonth(date)) %>% 
-  nest(-yrmth)
-
-## ---- slide2
+## ---- slide-month-hide
 enquiry_sum %>% 
   mutate(yrmth = yearmonth(date)) %>% 
   nest(-yrmth) %>% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2))
-
-## ---- slide3
-enquiry_sum %>% 
-  mutate(yrmth = yearmonth(date)) %>% 
-  nest(-yrmth) %>% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+  mutate(ma = slide_dbl(
+    data, ~ mean(bind_rows(.)$ttl_volume), .size = 2
+  )) %>% 
   unnest(data)
 
-## ---- slide4
+## ---- slide-month
 enquiry_sum %>% 
   mutate(yrmth = yearmonth(date)) %>% 
   nest(-yrmth) %>% 
-  mutate(ma = slide_dbl(data, ~ mean(.$ttl_volume), .size = 2)) %>% 
+  mutate(ma = slide_dbl(data, ~ mean(bind_rows(.)$ttl_volume), .size = 2)) %>% 
   unnest(data) %>% 
   ggplot() +
   geom_line(aes(x = date, y = ttl_volume), colour = "grey80") +
-  geom_line(aes(x = yrmth, y = ma)) +
+  geom_line(aes(x = yrmth, y = ma), colour = "#3182bd", size = 2) +
   xlab("Date") +
   ylab("Total volume") +
   theme_remark()
