@@ -160,6 +160,10 @@ code {
   padding-top: 1em;
 }
 
+.title-slide {
+  font-size: 30px;
+}
+
 .title-slide .remark-slide-number {
   display: none;
 }

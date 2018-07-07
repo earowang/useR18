@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tidy data structures to support exploration   and modeling of temporal-context data</title>
+    <title>The 15th time series standard</title>
     <meta charset="utf-8">
     <meta name="author" content="Earo Wang   <i class="fab  fa-twitter " style="color:#55acee;"></i> @earowang" />
     <link href="index_files/remark-css/default.css" rel="stylesheet" />
@@ -12,13 +12,13 @@
     <script src="index_files/collapsibleTree-binding/collapsibleTree.js"></script>
     <link rel="stylesheet" href="remark.css" type="text/css" />
     <link rel="stylesheet" href="extra.css" type="text/css" />
+    <link rel="stylesheet" href="timeline.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Tidy data structures to support exploration <br> and modeling of temporal-context data
-## <img src='img/tsibble.png' height=125px>
+# The 15th time series standard <br> <img src='img/tsibble.png' height=135px>
 ### Earo Wang <br> <i class="fab  fa-twitter " style="color:#55acee;"></i> <span class="citation">@earowang</span>
 ### 13 July, 2018 <br> slides at <a href="http://slides.earo.me/useR18" class="uri">http://slides.earo.me/useR18</a>
 
@@ -31,22 +31,44 @@ class: center, middle, inverse, title-slide
 
 ## Time series standards in R ecosystem.red[&lt;sup&gt;1&lt;/sup&gt;]
 
-* **ts** represents regularly spaced time series using numeric time stamps.
-  + `ts(data, start = 1, frequency = 1)`
+.timeline.timeline-left.purple-flirt.timeline-with-arrows[
+.timeline-block[
+.arrow-right[
+.timeline-content[
+**ts** represents regularly spaced time series using numeric time stamps. &lt;br&gt;
+`ts(data, start = 1, frequency = 1)`
+]]]
 
+.timeline-block[
+.arrow-right[
+.timeline-content[
+**zoo** provides infrastructure for regularly and irregularly spaced time series using arbitrary classes for the time stamps. &lt;br&gt;
+`zoo(x, order.by = index(x))`
+.timeline-date[
+2004/02
+]]]]
 
-* **zoo** provides infrastructure for regularly and irregularly spaced time series using arbitrary classes for the time stamps.
-  + `zoo(x, order.by = index(x))`
+.timeline-block[
+.arrow-right[
+.timeline-content[
+**xts** extends the `zoo` class but provides a mechanism to customize the object's meta-data. &lt;br&gt;
+`xts(x, order.by = index(x))`
+.timeline-date[
+2008/01
+]]]]
+.timeline-block[
+.arrow-right[
+.timeline-content[
+**irts**, **fts**, **timeSeries**, **tis**, and etc.
+.timeline-date[
+...
+]]]]
+]
 
-
-* **xts** extends the `zoo` class but provides an mechanism to customize the object's meta-data.
-  + `xts(x, order.by = index(x))`
-
-
-* **irts**, **fts**, **timeSeries**, **tis**, and etc.
-
+.pull-right[
 .footnote[
 .red[1.] [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
+]
 ]
 
 ---
@@ -84,7 +106,7 @@ Too many defaults as if we live in an ideal data world
 
 class: inverse middle center
 
-## Do we have too many restrictions on data?
+## Do we have too many restrictions on data? 🤔
 
 ---
 
@@ -139,6 +161,26 @@ enquiry
 
 ---
 
+class: middle
+
+## Wish list
+
+.checked[
+* abitrary time index class
+* easy to access index as an explict column, not an implict attribute
+* heterogeneous data types
+* nested and crossed structures
+]
+
+&lt;hr&gt;
+
+.checked[
+* a unified and user-friendly interface
+* human readable analysis
+]
+
+---
+
 class: middle center
 
 ![](https://imgs.xkcd.com/comics/standards.png)
@@ -165,15 +207,16 @@ class: inverse middle center
 .right-column[
 ## Coercion
 
-
 ```r
 library(tsibble)
 enquiry_tsbl &lt;- enquiry %&gt;% 
-  as_tsibble(
-    key = id(service | category, channel), index = date
-  )
+* as_tsibble(
+*   key = id(service | category, channel), index = date
+* )
 enquiry_tsbl
 ```
+
+
 
 ```
 #&gt; # A tsibble: 110,397 x 5 [1DAY]
@@ -200,12 +243,11 @@ enquiry_tsbl
 ### - `tbl_ts`
 ]
 .right-column[
-## Tidy temporal data
-
+## A valid tsibble
 
 ```
-#&gt; # A tsibble: 110,397 x 5 [1DAY]
-#&gt; # Key:       service | category, channel [204]
+*#&gt; # A tsibble: 110,397 x 5 [1DAY]
+*#&gt; # Key:       service | category, channel [204]
 #&gt;   date       channel category                service volume
 #&gt;   &lt;date&gt;     &lt;fct&gt;   &lt;fct&gt;                   &lt;fct&gt;    &lt;int&gt;
 #&gt; 1 2014-06-16 Email   Built Structure Control Advert…      1
@@ -216,6 +258,9 @@ enquiry_tsbl
 #&gt; 6 2014-07-30 Email   Built Structure Control Advert…      3
 #&gt; # ... with 1.104e+05 more rows
 ```
+
+
+
 * Given the nature of temporal ordering, a tsibble object is **sorted by its key
   and index from past to future**.
 * If data of regular time interval, it shares **a common time interval** across the units.
@@ -232,10 +277,11 @@ enquiry_tsbl
 .right-column[
 ## Turn implicit missing values into explicit missing values
 
-
 ```r
-enquiry_tsbl %&gt;% fill_na()
+enquiry_tsbl %&gt;% 
+* fill_na()
 ```
+
 
 ```
 #&gt; # A tsibble: 237,821 x 5 [1DAY]
@@ -263,12 +309,13 @@ enquiry_tsbl %&gt;% fill_na()
 .right-column[
 ## Turn implicit missing values into explicit missing values
 
-
 ```r
 enquiry_full &lt;- enquiry_tsbl %&gt;% 
-  fill_na(volume = 0L)
+* fill_na(volume = 0L)
 enquiry_full
 ```
+
+
 
 ```
 #&gt; # A tsibble: 237,821 x 5 [1DAY]
@@ -297,13 +344,13 @@ enquiry_full
 .right-column[
 ## Group time index
 
-
 ```r
 library(lubridate)
 enquiry_full %&gt;% 
   group_by(channel, category) %&gt;% 
-  index_by(year = year(date))
+* index_by(year = year(date))
 ```
+
 
 ```
 #&gt; # A tsibble: 237,821 x 6 [1DAY]
@@ -334,14 +381,14 @@ enquiry_full %&gt;%
 .right-column[
 ## Aggregate over calendar periods
 
-
 ```r
 enquiry_year &lt;- enquiry_full %&gt;% 
   group_by(channel, category) %&gt;% 
-  index_by(year = year(date)) %&gt;% 
-  summarise(annual_volume = sum(volume))
+* index_by(year = year(date)) %&gt;% 
+* summarise(annual_volume = sum(volume))
 enquiry_year
 ```
+
 
 ```
 #&gt; # A tsibble: 239 x 4 [1YEAR]
@@ -383,7 +430,7 @@ enquiry_year
 * **dplyr:** 
   - `arrange()`, `filter()`, `slice()`
   - `mutate()`, `transmute()`, `select()`, `rename()`, `summarise()`/`summarize()`
-  - `[left|right|full|inner|anti|semi]_join()`
+  - `left/right/full/inner/anti/semi_join()`
   - `group_by()`, `ungroup()`
 * **tidyr**: `gather()`, `spread()`, `nest()`, `unnest()`
 
@@ -425,6 +472,21 @@ class: inverse middle center
 ## Fixed window size
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+  + `slide()` always returns a list
+  + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
+]
+
+---
+
+.left-column[
+&lt;img src="img/tsibble.png" height=120px&gt;
+### - sliding
+]
+.right-column[
+## Fixed window size
+
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+  + `slide()` always returns a list
   + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
 
 
@@ -443,7 +505,7 @@ enquiry_sum %&gt;%
 ### - sliding
 ]
 .right-column[
-## Flexible calendar periods
+## Flexible calendar periods: row-oriented workflow
 
 
 ```r
@@ -467,7 +529,7 @@ enquiry_sum %&gt;%
 ### - sliding family
 ]
 .right-column[
-## A family of sliding window functions
+## A family of window functions
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
 
@@ -481,6 +543,12 @@ enquiry_sum %&gt;%
 
 ---
 
+class: inverse middle center
+
+## One more thing ...
+
+---
+
 background-image: url(img/tidyverse.png)
 background-size: 90%
 
@@ -491,7 +559,7 @@ background-size: 90%
 background-image: url(img/tidyverts.png)
 background-size: 80%
 
-## Tidyverts ecosystem
+## Tidyverts
 
 ---
 
@@ -512,15 +580,17 @@ background-size: 80%
 
 class: inverse middle center
 
-### More on tsibble <i class="fas  fa-info-circle "></i> &lt;http://bit.ly/tsibble&gt;
-
+.large[
 ### Joint work with <i class="fas  fa-users "></i> [Di Cook](http://dicook.org) &amp; [Rob J Hyndman](http://robjhyndman.com)
+
+### More on tsibble <i class="fas  fa-info-circle "></i> &lt;http://bit.ly/tsibble&gt;
 
 ### Slides created via xaringan ⚔️ &lt;http://slides.earo.me/useR18&gt;
 
 ### Open source <i class="fab  fa-github "></i> [earowang/useR18](https://github.com/earowang/useR18)
 
 ### This work is under licensed <i class="fab  fa-creative-commons "></i> [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

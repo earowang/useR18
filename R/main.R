@@ -50,7 +50,8 @@ ggplot(enquiry_gaps, aes(colour = channel)) +
   theme(legend.position = "bottom")
 
 ## ---- fill-na1
-enquiry_tsbl %>% fill_na()
+enquiry_tsbl %>% 
+  fill_na()
 
 ## ---- fill-na2
 enquiry_full <- enquiry_tsbl %>% 
