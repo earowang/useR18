@@ -94,7 +94,6 @@ This matrix structure assumes
 
 * homogeneity
 * time indices implicitly inferred as attributes/meta-information
-* explicit missing values
 
 It is **model-centric** rather than **data-centric**.
 
@@ -463,31 +462,14 @@ background-size: 80%
 
 ---
 
-## Related works
-
-* **tibbletime**: time-aware tibbles
-
-
-* **timetk**: a toolkit for working with time series
-
-
-* **tsbox**: class-agnostic time series
-
-
-* **padr**: padding of missing records in time series
-
----
-
 class: inverse middle center
 
-.large[
 ### Joint work with `r icon::fa_users()` [Di Cook](http://dicook.org) & [Rob J Hyndman](http://robjhyndman.com)
 
-### More on tsibble `r icon::fa_info_circle()` <http://bit.ly/tsibble>
+### More on tsibble `r icon::fa_info_circle()` <http://pkg.earo.me/tsibble>
 
 ### Slides created via xaringan `r emo::ji("crossed_swords")` <http://slides.earo.me/useR18>
 
 ### Open source `r icon::fa_github()` [earowang/useR18](https://github.com/earowang/useR18)
 
 ### This work is under licensed `r icon::fa("creative-commons")` [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
-]

@@ -94,7 +94,6 @@ This matrix structure assumes
 
 * homogeneity
 * time indices implicitly inferred as attributes/meta-information
-* explicit missing values
 
 It is **model-centric** rather than **data-centric**.
 
@@ -436,7 +435,7 @@ enquiry_year
 
 
 ```r
-enquiry_sum &lt;- enquiry_full %&gt;% 
+enquiry_sum &lt;- enquiry_full %&gt;%
   summarise(ttl_volume = sum(volume))
 enquiry_sum
 ```
@@ -491,7 +490,7 @@ class: inverse middle center
 
 
 ```r
-enquiry_sum %&gt;% 
+enquiry_sum %&gt;%
   mutate(ma = slide_dbl(ttl_volume, mean, .size = 7))
 ```
 
@@ -509,12 +508,12 @@ enquiry_sum %&gt;%
 
 
 ```r
-enquiry_sum %&gt;% 
-  mutate(yrmth = yearmonth(date)) %&gt;% 
-  nest(-yrmth) %&gt;% 
+enquiry_sum %&gt;%
+  mutate(yrmth = yearmonth(date)) %&gt;%
+  nest(-yrmth) %&gt;%
   mutate(ma = slide_dbl(
     data, ~ mean(bind_rows(.)$ttl_volume), .size = 2
-  )) %&gt;% 
+  )) %&gt;%
   unnest(data)
 ```
 
@@ -563,34 +562,17 @@ background-size: 80%
 
 ---
 
-## Related works
-
-* **tibbletime**: time-aware tibbles
-
-
-* **timetk**: a toolkit for working with time series
-
-
-* **tsbox**: class-agnostic time series
-
-
-* **padr**: padding of missing records in time series
-
----
-
 class: inverse middle center
 
-.large[
 ### Joint work with <i class="fas  fa-users "></i> [Di Cook](http://dicook.org) &amp; [Rob J Hyndman](http://robjhyndman.com)
 
-### More on tsibble <i class="fas  fa-info-circle "></i> &lt;http://bit.ly/tsibble&gt;
+### More on tsibble <i class="fas  fa-info-circle "></i> &lt;http://pkg.earo.me/tsibble&gt;
 
 ### Slides created via xaringan ⚔️ &lt;http://slides.earo.me/useR18&gt;
 
 ### Open source <i class="fab  fa-github "></i> [earowang/useR18](https://github.com/earowang/useR18)
 
 ### This work is under licensed <i class="fab  fa-creative-commons "></i> [BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
-]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
