@@ -120,21 +120,55 @@ enquiry_ma %>%
   ylab("Total volume") +
   theme_remark()
 
-## ---- slide-hide-animate
+## ---- slide-animate
 library(gganimate)
-idx <- lapply(seq_len(nrow(enquiry_ma)), seq_len)
-enquiry_ma1 <- as_tibble(map_dfr(idx, function(x) {
-  tmp <- enquiry_ma[x, ]
-  tmp$group <- length(x)
-  tmp
-}))
-
-ggplot() +
-  geom_line(data = enquiry_ma, aes(x = date, y = ttl_volume), colour = "grey80") +
-  geom_line(data = enquiry_ma1, aes(x = date, y = ma, group = group), colour = "#3182bd", size = 1) +
+slide_window <- slider(enquiry_ma$date, .size = 60) %>%
+  map_dfr(function(x) tibble(xmin = min(x), xmax = max(x))) %>%
+  mutate(ymin = -Inf, ymax = Inf, group = row_number())
+p_slide <- ggplot() +
+  geom_line(aes(date, ttl_volume), colour = "grey80", data = enquiry_ma) +
+  geom_rect(aes(
+    xmin = xmin, xmax = xmax,
+    ymin = ymin, ymax = ymax,
+    group = group
+  ), data = slide_window, fill = "#e6550d", alpha = 0.6) +
   xlab("Date") +
   ylab("Total volume") +
+  theme_remark() +
   transition_manual(group)
+animate(p_slide, 100, 5, width = 800, height = 200)
+
+tile_window <- tiler(enquiry_ma$date, .size = 60) %>%
+  map_dfr(function(x) tibble(xmin = min(x), xmax = max(x))) %>%
+  mutate(ymin = -Inf, ymax = Inf, group = row_number())
+p_tile <- ggplot() +
+  geom_line(aes(date, ttl_volume), colour = "grey80", data = enquiry_ma) +
+  geom_rect(aes(
+    xmin = xmin, xmax = xmax,
+    ymin = ymin, ymax = ymax,
+    group = group
+  ), data = tile_window, fill = "#e6550d", alpha = 0.6) +
+  xlab("Date") +
+  ylab("Total volume") +
+  theme_remark() +
+  transition_manual(group)
+animate(p_tile, 100, 5, width = 800, height = 200)
+
+stretch_window <- stretcher(enquiry_ma$date, .init = 60) %>%
+  map_dfr(function(x) tibble(xmin = min(x), xmax = max(x))) %>%
+  mutate(ymin = -Inf, ymax = Inf, group = row_number())
+p_stretch <- ggplot() +
+  geom_line(aes(date, ttl_volume), colour = "grey80", data = enquiry_ma) +
+  geom_rect(aes(
+    xmin = xmin, xmax = xmax,
+    ymin = ymin, ymax = ymax,
+    group = group
+  ), data = stretch_window, fill = "#e6550d", alpha = 0.6) +
+  xlab("Date") +
+  ylab("Total volume") +
+  theme_remark() +
+  transition_manual(group)
+animate(p_stretch, 100, 5, width = 800, height = 200)
 
 ## ---- slide-show
 enquiry_sum %>%

@@ -37,7 +37,9 @@ read_chunk('R/main.R')
 .timeline-content[
 **ts** represents regularly spaced time series using numeric time stamps. <br>
 `ts(data, start = 1, frequency = 1)`
-]]]
+.timeline-date[
+day 0
+]]]]
 
 .timeline-block[
 .arrow-right[
@@ -73,7 +75,17 @@ read_chunk('R/main.R')
 
 ---
 
-## Time series standards in R ecosystem
+class: middle center
+
+![](https://imgs.xkcd.com/comics/standards.png)
+
+.footnote[
+.red[reference:] [XKCD on "standards"](https://xkcd.com/927/)
+]
+
+---
+
+## Do we have too many restrictions on data? `r emo::ji("thinking")`
 
 The data structure that underlies these time series objects:
 
@@ -100,12 +112,6 @@ It is **model-centric** rather than **data-centric**.
 ???
 
 Too many defaults as if we live in an ideal data world
-
----
-
-class: inverse middle center
-
-## Do we have too many restrictions on data? `r emo::ji("thinking")`
 
 ---
 
@@ -164,15 +170,6 @@ class: middle
 * human readable analysis
 ]
 
----
-
-class: middle center
-
-![](https://imgs.xkcd.com/comics/standards.png)
-
-.footnote[
-.red[reference:] [XKCD on "standards"](https://xkcd.com/927/)
-]
 
 ---
 
@@ -374,28 +371,62 @@ class: inverse middle center
 
 .left-column[
 <img src="img/tsibble.png" height=120px>
-### - sliding
+### - window family
 ]
 .right-column[
-## Fixed window size
+## Slide & tile
 
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
-  + `slide()` always returns a list
-  + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
+
+![](img/slide.gif)
 ]
 
 ---
 
 .left-column[
 <img src="img/tsibble.png" height=120px>
+### - window family
+]
+.right-column[
+## Slide & tile
+
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+
+![](img/slide.gif)
+
+* `tile()`/`tile2()`/`ptile()`: tiling window without overlapping observations
+
+![](img/tile.gif)
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - window family
+]
+.right-column[
+## Stretch
+
+* `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
+
+![](img/stretch.gif)
+
+<hr>
+* They are type-stable `r emo::ji("bangbang")`
+  + `slide()`/`tile()`/`stretch()` always returns a list
+  + Other variants: `*_dbl()`, `*_int()`, `*_lgl()`, `*_chr()`
+]
+
+---
+
+.left-column[
+<img src="img/tsibble.png" height=120px>
+### - window family
 ### - sliding
 ]
 .right-column[
 ## Fixed window size
-
-* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
-  + `slide()` always returns a list
-  + type-stable variants: `slide_dbl()`, `slide_int()`, `slide_lgl()`, `slide_chr()`
 
 ```{r slide-show, echo = TRUE, eval = FALSE}
 ```
@@ -408,6 +439,7 @@ class: inverse middle center
 
 .left-column[
 <img src="img/tsibble.png" height=120px>
+### - window family
 ### - sliding
 ]
 .right-column[
@@ -420,25 +452,6 @@ class: inverse middle center
 ```
 ]
 
----
-
-.left-column[
-<img src="img/tsibble.png" height=120px>
-### - sliding
-### - sliding family
-]
-.right-column[
-## A family of window functions
-
-* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
-
-
-* `tile()`/`tile2()`/`ptile()`: tiling window without overlapping observations
-
-
-* `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
-
-]
 
 ---
 
@@ -458,7 +471,7 @@ background-size: 90%
 background-image: url(img/tidyverts.png)
 background-size: 80%
 
-## Tidyverts
+## tidyverts.org
 
 ---
 
