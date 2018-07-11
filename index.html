@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 
 # The 15th time series standard <br> <img src='img/tsibble.png' height=135px>
 ### Earo Wang <br> <i class="fab  fa-twitter " style="color:#55acee;"></i> <span class="citation">@earowang</span>
-### 13 July, 2018 <br> slides at <a href="http://slides.earo.me/useR18" class="uri">http://slides.earo.me/useR18</a>
+### 13 July 2018 <br> slides at <a href="http://slides.earo.me/useR18" class="uri">http://slides.earo.me/useR18</a>
 
 ---
 
@@ -31,6 +31,7 @@ class: center, middle, inverse, title-slide
 
 ## Time series standards in R ecosystem.red[&lt;sup&gt;1&lt;/sup&gt;]
 
+.pull-left[
 .timeline.timeline-left.purple-flirt.timeline-with-arrows[
 .timeline-block[
 .arrow-right[
@@ -49,7 +50,11 @@ day 0
 .timeline-date[
 2004/02
 ]]]]
+]
+]
 
+.pull-right[
+.timeline.timeline-left.purple-flirt.timeline-with-arrows[
 .timeline-block[
 .arrow-right[
 .timeline-content[
@@ -66,8 +71,6 @@ day 0
 ...
 ]]]]
 ]
-
-.pull-right[
 .footnote[
 .red[1.] [CRAN Task View: Time Series Analysis](https://cran.r-project.org/web/views/TimeSeries.html)
 ]
@@ -75,9 +78,8 @@ day 0
 
 ---
 
-class: middle center
-
-![](https://imgs.xkcd.com/comics/standards.png)
+background-image: url(https://imgs.xkcd.com/comics/standards.png)
+background-size: 70%
 
 .footnote[
 .red[reference:] [XKCD on "standards"](https://xkcd.com/927/)
@@ -116,7 +118,7 @@ Too many defaults as if we live in an ideal data world
 ---
 
 background-image: url(img/tree-bg.png)
-background-size: 100%
+background-size: 80%
 
 class: center
 
@@ -161,8 +163,8 @@ enquiry
 
 ## Brisbane City Councils Contact Centre enquiries
 
-<div id="htmlwidget-ccfe52936af7d0d62ae2" style="width:864px;height:600px;" class="collapsibleTree html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ccfe52936af7d0d62ae2">{"x":{"data":{"name":"Brisbane City Councils","fill":"#1b9e77","children":[{"name":"Animal Control","fill":"#d95f02","children":[{"name":"Animal Permit","fill":"#7570b3"},{"name":"Animal Reunion","fill":"#7570b3"},{"name":"Commercial Animal Control","fill":"#7570b3"},{"name":"Domestic Animal Control","fill":"#7570b3"},{"name":"Livestock Control","fill":"#7570b3"},{"name":"Lost Animal Reunion","fill":"#7570b3"}]},{"name":"Built Structure Control","fill":"#d95f02","children":[{"name":"Advertising Sign Enforcement","fill":"#7570b3"},{"name":"Advertising Sign Local Law","fill":"#7570b3"},{"name":"Advertising Sign Permit","fill":"#7570b3"},{"name":"Advertising Sign Regulation","fill":"#7570b3"},{"name":"Building Plan Search","fill":"#7570b3"},{"name":"Built Structure Enforcement","fill":"#7570b3"},{"name":"Built Structure Legislation Consultation","fill":"#7570b3"},{"name":"Built Structure Permit","fill":"#7570b3"},{"name":"Built Structure Regulation","fill":"#7570b3"}]},{"name":"Call Centre Services","fill":"#d95f02","children":[{"name":"Customer Management","fill":"#7570b3"},{"name":"Customer Request Management","fill":"#7570b3"},{"name":"Lost Property Management","fill":"#7570b3"},{"name":"Switchboard Services","fill":"#7570b3"}]},{"name":"Parking Control","fill":"#d95f02","children":[{"name":"Commercial Parking Permit","fill":"#7570b3"},{"name":"On Street Parking Management","fill":"#7570b3"},{"name":"Parking Control Enforcement","fill":"#7570b3"},{"name":"Parking Control Local Law","fill":"#7570b3"},{"name":"Residential Parking Permit","fill":"#7570b3"}]},{"name":"Plumbing Control Services","fill":"#d95f02","children":[{"name":"Plumbing Control","fill":"#7570b3"},{"name":"Plumbing Enforcement","fill":"#7570b3"},{"name":"Plumbing Permit","fill":"#7570b3"},{"name":"Plumbing Regulation","fill":"#7570b3"}]},{"name":"Property Information Services","fill":"#d95f02","children":[{"name":"Development History","fill":"#7570b3"},{"name":"Flood Information and Advice","fill":"#7570b3"},{"name":"Property Searches","fill":"#7570b3"},{"name":"Rates Services","fill":"#7570b3"},{"name":"Spatial Information Services","fill":"#7570b3"}]},{"name":"Rates Assessment","fill":"#d95f02","children":[{"name":"Rates Entitlements","fill":"#7570b3"},{"name":"Rates Maintenance","fill":"#7570b3"}]},{"name":"Rates Payment Services","fill":"#d95f02","children":[{"name":"Rates Payment Collection","fill":"#7570b3"}]},{"name":"Road Network Management","fill":"#d95f02","children":[{"name":"Bridge","fill":"#7570b3"},{"name":"Footpath","fill":"#7570b3"},{"name":"Kerb and Channel","fill":"#7570b3"},{"name":"Road","fill":"#7570b3"},{"name":"Road Network Initiative","fill":"#7570b3"},{"name":"Road Network Safety Device","fill":"#7570b3"},{"name":"Sign and Line","fill":"#7570b3"},{"name":"Signal","fill":"#7570b3"},{"name":"Streetlight","fill":"#7570b3"}]},{"name":"Tree Management","fill":"#d95f02","children":[{"name":"Tree Maintenance","fill":"#7570b3"},{"name":"Tree Management Control","fill":"#7570b3"},{"name":"Tree Management Programs","fill":"#7570b3"}]},{"name":"Waste Collection","fill":"#d95f02","children":[{"name":"Kerbside Collection","fill":"#7570b3"},{"name":"Public Space Waste Collection","fill":"#7570b3"},{"name":"Waste Asset Provision","fill":"#7570b3"},{"name":"Waste Collection Service Management","fill":"#7570b3"},{"name":"Waste Community Consultation","fill":"#7570b3"}]},{"name":"Other","fill":"#d95f02","children":[{"name":"Call Centre Services","fill":"#7570b3"},{"name":"Other","fill":"#7570b3"}]}]},"options":{"hierarchy":["category","service"],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":16,"tooltip":false,"collapsed":true,"zoomable":true,"margin":{"top":20,"bottom":20,"left":201,"right":345}}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1361689d54cc98ce2e8b" style="width:864px;height:600px;" class="collapsibleTree html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1361689d54cc98ce2e8b">{"x":{"data":{"name":"Brisbane City Councils","fill":"#1b9e77","children":[{"name":"Animal Control","fill":"#d95f02","children":[{"name":"Animal Permit","fill":"#7570b3"},{"name":"Animal Reunion","fill":"#7570b3"},{"name":"Commercial Animal Control","fill":"#7570b3"},{"name":"Domestic Animal Control","fill":"#7570b3"},{"name":"Livestock Control","fill":"#7570b3"},{"name":"Lost Animal Reunion","fill":"#7570b3"}]},{"name":"Built Structure Control","fill":"#d95f02","children":[{"name":"Advertising Sign Enforcement","fill":"#7570b3"},{"name":"Advertising Sign Local Law","fill":"#7570b3"},{"name":"Advertising Sign Permit","fill":"#7570b3"},{"name":"Advertising Sign Regulation","fill":"#7570b3"},{"name":"Building Plan Search","fill":"#7570b3"},{"name":"Built Structure Enforcement","fill":"#7570b3"},{"name":"Built Structure Legislation Consultation","fill":"#7570b3"},{"name":"Built Structure Permit","fill":"#7570b3"},{"name":"Built Structure Regulation","fill":"#7570b3"}]},{"name":"Call Centre Services","fill":"#d95f02","children":[{"name":"Customer Management","fill":"#7570b3"},{"name":"Customer Request Management","fill":"#7570b3"},{"name":"Lost Property Management","fill":"#7570b3"},{"name":"Switchboard Services","fill":"#7570b3"}]},{"name":"Parking Control","fill":"#d95f02","children":[{"name":"Commercial Parking Permit","fill":"#7570b3"},{"name":"On Street Parking Management","fill":"#7570b3"},{"name":"Parking Control Enforcement","fill":"#7570b3"},{"name":"Parking Control Local Law","fill":"#7570b3"},{"name":"Residential Parking Permit","fill":"#7570b3"}]},{"name":"Plumbing Control Services","fill":"#d95f02","children":[{"name":"Plumbing Control","fill":"#7570b3"},{"name":"Plumbing Enforcement","fill":"#7570b3"},{"name":"Plumbing Permit","fill":"#7570b3"},{"name":"Plumbing Regulation","fill":"#7570b3"}]},{"name":"Property Information Services","fill":"#d95f02","children":[{"name":"Development History","fill":"#7570b3"},{"name":"Flood Information and Advice","fill":"#7570b3"},{"name":"Property Searches","fill":"#7570b3"},{"name":"Rates Services","fill":"#7570b3"},{"name":"Spatial Information Services","fill":"#7570b3"}]},{"name":"Rates Assessment","fill":"#d95f02","children":[{"name":"Rates Entitlements","fill":"#7570b3"},{"name":"Rates Maintenance","fill":"#7570b3"}]},{"name":"Rates Payment Services","fill":"#d95f02","children":[{"name":"Rates Payment Collection","fill":"#7570b3"}]},{"name":"Road Network Management","fill":"#d95f02","children":[{"name":"Bridge","fill":"#7570b3"},{"name":"Footpath","fill":"#7570b3"},{"name":"Kerb and Channel","fill":"#7570b3"},{"name":"Road","fill":"#7570b3"},{"name":"Road Network Initiative","fill":"#7570b3"},{"name":"Road Network Safety Device","fill":"#7570b3"},{"name":"Sign and Line","fill":"#7570b3"},{"name":"Signal","fill":"#7570b3"},{"name":"Streetlight","fill":"#7570b3"}]},{"name":"Tree Management","fill":"#d95f02","children":[{"name":"Tree Maintenance","fill":"#7570b3"},{"name":"Tree Management Control","fill":"#7570b3"},{"name":"Tree Management Programs","fill":"#7570b3"}]},{"name":"Waste Collection","fill":"#d95f02","children":[{"name":"Kerbside Collection","fill":"#7570b3"},{"name":"Public Space Waste Collection","fill":"#7570b3"},{"name":"Waste Asset Provision","fill":"#7570b3"},{"name":"Waste Collection Service Management","fill":"#7570b3"},{"name":"Waste Community Consultation","fill":"#7570b3"}]},{"name":"Other","fill":"#d95f02","children":[{"name":"Call Centre Services","fill":"#7570b3"},{"name":"Other","fill":"#7570b3"}]}]},"options":{"hierarchy":["category","service"],"input":null,"attribute":"leafCount","linkLength":null,"fontSize":16,"tooltip":false,"collapsed":true,"zoomable":true,"margin":{"top":20,"bottom":20,"left":201,"right":345}}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -170,20 +172,21 @@ class: middle
 
 ## Wish list
 
+.pull-left[
 .checked[
 * abitrary time index class
 * easy to access index as an explict column, not an implict attribute
 * heterogeneous data types
 * nested and crossed structures
 ]
+]
 
-&lt;hr&gt;
-
+.pull-right[
 .checked[
 * a unified and user-friendly interface
 * human readable analysis
 ]
-
+]
 
 ---
 
@@ -201,7 +204,6 @@ class: inverse middle center
 ### - `as_tsibble()`
 ]
 .right-column[
-## Coercion
 
 ```r
 library(tsibble)
@@ -423,13 +425,20 @@ enquiry_year
 
 ## Seamlessly work with tidyverse
 
+.pull-left[
 * **dplyr:** 
   - `arrange()`, `filter()`, `slice()`
   - `mutate()`, `transmute()`, `select()`, `rename()`, `summarise()`/`summarize()`
-  - `left/right/full/inner/anti/semi_join()`
+  - `*_join()`
   - `group_by()`, `ungroup()`
-* **tidyr**: `gather()`, `spread()`, `nest()`, `unnest()`
+* **tidyr**: 
+  - `gather()`, `spread()`, 
+  - `nest()`, `unnest()`
+]
 
+--
+
+.pull-right[
 
 ```r
 enquiry_sum &lt;- enquiry_full %&gt;%
@@ -449,6 +458,7 @@ enquiry_sum
 #&gt; 6 2014-01-06       3320
 #&gt; # ... with 1,545 more rows
 ```
+]
 
 ---
 
@@ -460,61 +470,61 @@ class: inverse middle center
 
 ---
 
-.left-column[
-&lt;img src="img/tsibble.png" height=120px&gt;
-### - window family
-]
-.right-column[
-## Slide &amp; tile
+## A family of window functions
 
+.pull-left[
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+]
 
+.pull-right[
 ![](img/slide.gif)
 ]
 
 ---
 
-.left-column[
-&lt;img src="img/tsibble.png" height=120px&gt;
-### - window family
-]
-.right-column[
-## Slide &amp; tile
+## A family of window functions
 
+.pull-left[
 * `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
 
-![](img/slide.gif)
 
 * `tile()`/`tile2()`/`ptile()`: tiling window without overlapping observations
+]
 
+.pull-right[
+![](img/slide.gif)
 ![](img/tile.gif)
 ]
 
 ---
 
-.left-column[
-&lt;img src="img/tsibble.png" height=120px&gt;
-### - window family
-]
-.right-column[
-## Stretch
+## A family of window functions
+
+.pull-left[
+* `slide()`/`slide2()`/`pslide()`: sliding window with overlapping observations
+
+
+* `tile()`/`tile2()`/`ptile()`: tiling window without overlapping observations
+  
 
 * `stretch()`/`stretch2()`/`pstretch()`: fixing an initial window and expanding to include more observations
+]
 
+.pull-right[
+![](img/slide.gif)
+![](img/tile.gif)
 ![](img/stretch.gif)
+]
 
 &lt;hr&gt;
-* They are type-stable ‼️
-  + `slide()`/`tile()`/`stretch()` always returns a list
-  + Other variants: `*_dbl()`, `*_int()`, `*_lgl()`, `*_chr()`
-]
+
+Type-stable: `slide()`/`tile()`/`stretch()` (a list) <i class="fas  fa-plus "></i> other variants: `*_dbl()`, `*_int()`, `*_lgl()`, `*_chr()`
 
 ---
 
 .left-column[
 &lt;img src="img/tsibble.png" height=120px&gt;
-### - window family
-### - sliding
+### - fixed
 ]
 .right-column[
 ## Fixed window size
@@ -532,8 +542,8 @@ enquiry_sum %&gt;%
 
 .left-column[
 &lt;img src="img/tsibble.png" height=120px&gt;
-### - window family
-### - sliding
+### - fixed
+### - flexible
 ]
 .right-column[
 ## Flexible calendar periods: row-oriented workflow
@@ -562,14 +572,14 @@ class: inverse middle center
 ---
 
 background-image: url(img/tidyverse.png)
-background-size: 90%
+background-size: 80%
 
 ## Data science workflow
 
 ---
 
 background-image: url(img/tidyverts.png)
-background-size: 80%
+background-size: 65%
 
 ## tidyverts.org
 
@@ -589,6 +599,7 @@ class: inverse middle center
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
+"ratio": "16:9",
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false

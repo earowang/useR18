@@ -12,7 +12,7 @@
 /* Main logic */
 .timeline {
   position: relative;
-  font-size: 18px;
+  font-size: 26px;
   width: 100%;
   height: 100%;
   margin: 0 auto;
@@ -55,7 +55,7 @@
     background-color: #deebf7;
     border: 1px solid #e5e5e5;
     border-radius: 0 12px 12px 12px;
-    line-height: 20px;
+    line-height: 28px;
     min-height: 64px; }
   .timeline .timeline-date {
     position: absolute;
